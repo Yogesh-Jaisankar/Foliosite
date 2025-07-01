@@ -15,17 +15,18 @@ class WebView extends StatefulWidget {
 class _WebViewState extends State<WebView> with TickerProviderStateMixin {
   final PageController _pageController = PageController();
   final List<Map<String, String>> _socialItems = [
-    {'asset': 'Asset/github.svg', 'url': 'https://github.com/yourusername'},
+    {'asset': 'Asset/github.svg', 'url': 'https://github.com/Yogesh-Jaisankar'},
     {
       'asset': 'Asset/linkdin.svg',
-      'url': 'https://linkedin.com/in/yourusername',
+      'url': 'https://www.linkedin.com/in/yogeshjaisankar/',
     },
-    {'asset': 'Asset/insta.svg', 'url': 'https://instagram.com/yourusername'},
+    {'asset': 'Asset/insta.svg', 'url': 'https://instagram.com/_yoshan._'},
   ];
 
   late List<AnimationController> _controllers;
   late List<Animation<double>> _rotationAnimations;
   final List<bool> _isHovered = [false, false, false];
+  bool _isVisible = false;
 
   @override
   void initState() {
@@ -41,8 +42,14 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
       return Tween<double>(
         begin: 0,
         end: 3.14159,
-      ).animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
+      ).animate(CurvedAnimation(parent: controller, curve: Curves.bounceIn));
     }).toList();
+    // Add listener to PageController
+    _pageController.addListener(() {
+      setState(() {
+        _isVisible = _pageController.page != null && _pageController.page! > 0;
+      });
+    });
   }
 
   @override
@@ -69,6 +76,16 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: _isVisible
+          ? FloatingActionButton(
+              shape: CircleBorder(),
+              onPressed: () => _navigateToPage(0),
+              child: Icon(Icons.arrow_upward),
+              tooltip: 'Back to top',
+              backgroundColor: Colors.black87,
+              foregroundColor: Colors.white,
+            )
+          : null,
       body: Padding(
         padding: const EdgeInsets.only(right: 2.0),
         child: RawScrollbar(
@@ -78,6 +95,7 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
           radius: Radius.circular(4), // Rounded edges
           controller: _pageController,
           child: PageView(
+            // pageSnapping: false,
             physics: const ClampingScrollPhysics(),
             controller: _pageController,
             scrollDirection: Axis.vertical,
@@ -124,11 +142,7 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
                           ),
                           NavItem(
                             text: "Contact",
-                            onTap: () => _navigateToPage(1),
-                          ),
-                          NavItem(
-                            text: "Resume",
-                            onTap: () => _navigateToPage(1),
+                            onTap: () => _navigateToPage(3),
                           ),
                         ],
                       ),
@@ -169,7 +183,7 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
                                         highlightColor: Colors.grey.shade500,
                                         period: const Duration(seconds: 5),
                                         child: Text(
-                                          "Hello! I'm Yogesh Jaisankar",
+                                          "Hello! I'm Yogesh Jaishankar",
                                           style: GoogleFonts.lexendDeca(
                                             fontSize: 32,
                                             fontWeight: FontWeight.bold,
@@ -346,7 +360,7 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
                                     highlightColor: Colors.grey.shade500,
                                     period: const Duration(seconds: 5),
                                     child: Text(
-                                      "Education And Extracurricular",
+                                      "About Me",
                                       style: GoogleFonts.lexendDeca(
                                         fontSize: 32,
                                         fontWeight: FontWeight.bold,
@@ -420,8 +434,10 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
                             Align(
                               alignment: Alignment.bottomCenter,
                               child: Image.asset(
-                                "Asset/edu.png",
-                                fit: BoxFit.fitHeight,
+                                "Asset/about.png",
+                                height: 600,
+                                width: 600,
+                                alignment: Alignment.centerRight,
                               ),
                             ),
                           ],
@@ -458,36 +474,239 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             // Left SVG Image
-                            Image.asset(
-                              "Asset/pro.png", // Replace with your SVG asset path
-                              height: 600,
-                              width: 600,
-                              alignment: Alignment
-                                  .centerLeft, // Ensure alignment to the left
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Shimmer.fromColors(
+                                  baseColor: Colors.white,
+                                  highlightColor: Colors.grey.shade500,
+                                  period: const Duration(seconds: 5),
+                                  child: Text(
+                                    "Projects",
+                                    style: GoogleFonts.lexendDeca(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 25),
+                                Image.asset(
+                                  "Asset/final.png", // Replace with your SVG asset path
+                                  height: 600,
+                                  width: 600,
+                                  alignment: Alignment
+                                      .centerLeft, // Ensure alignment to the left
+                                ),
+                              ],
                             ),
                             // Right Column
                             Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Shimmer.fromColors(
-                                    baseColor: Colors.white,
-                                    highlightColor: Colors.grey.shade500,
-                                    period: const Duration(seconds: 5),
-                                    child: Text(
-                                      "Projects",
-                                      style: GoogleFonts.lexendDeca(
-                                        fontSize: 32,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 20,
+                                      crossAxisSpacing: 20,
+                                      childAspectRatio: 1.5,
                                     ),
-                                  ),
-                                  const SizedBox(height: 50),
-                                ],
+                                itemCount: projects.length,
+                                itemBuilder: (context, index) {
+                                  final project = projects[index];
+                                  return MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: ProjectCard(
+                                      title: project["title"]!,
+                                      description: project["description"]!,
+                                      imagePath: project["imagePath"]!,
+                                      githubUrl: project["githubUrl"]!,
+                                      demoUrl: project["demoUrl"]!,
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ],
                         ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              //FootSection
+              Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset("Asset/bye.png", height: 300),
+                              const SizedBox(height: 40),
+                              Text(
+                                "Get in Touch",
+                                style: GoogleFonts.lexendDeca(
+                                  color: Colors.black87,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                "Contact Me",
+                                style: GoogleFonts.lexendDeca(
+                                  color: Colors.black87,
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 32),
+                              Container(
+                                constraints: const BoxConstraints(
+                                  maxWidth: 600,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: Colors.black87,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.mail,
+                                      color: Colors.black,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Flexible(
+                                      child: Text(
+                                        "Yogeshjaisnkar@gmail.com",
+                                        style: GoogleFonts.lexendDeca(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 15),
+                                    SvgPicture.asset(
+                                      "Asset/linkdin.svg",
+                                      height: 30,
+                                      color: Colors.black, // Match theme
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Flexible(
+                                      child: Text(
+                                        "Yogesh Jaisankar",
+                                        style: GoogleFonts.lexendDeca(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                      height: 100,
+                      padding: const EdgeInsets.all(15.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.white),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.8),
+                            spreadRadius: 2,
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Shimmer.fromColors(
+                            baseColor: Colors.white,
+                            highlightColor: Colors.grey.shade500,
+                            period: const Duration(seconds: 5),
+                            child: Text(
+                              "© 2025 Yogesh Jaishankar. All Rights Reserved.",
+                              style: GoogleFonts.lexendDeca(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Row(
+                            children: List.generate(_socialItems.length, (
+                              index,
+                            ) {
+                              return MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                onEnter: (_) {
+                                  setState(() => _isHovered[index] = true);
+                                  _controllers[index].forward();
+                                },
+                                onExit: (_) {
+                                  setState(() => _isHovered[index] = false);
+                                  _controllers[index].reverse();
+                                },
+                                child: GestureDetector(
+                                  onTap: () =>
+                                      _launchURL(_socialItems[index]['url']!),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 15.0),
+                                    child: AnimatedBuilder(
+                                      animation: _rotationAnimations[index],
+                                      builder: (context, child) {
+                                        return Transform(
+                                          transform: Matrix4.identity()
+                                            ..setEntry(3, 2, 0.001)
+                                            ..rotateY(
+                                              _rotationAnimations[index].value,
+                                            ),
+                                          alignment: Alignment.center,
+                                          child: SvgPicture.asset(
+                                            _socialItems[index]['asset']!,
+                                            color: Colors.white,
+                                            height: 40,
+                                            width: 40,
+                                            placeholderBuilder: (context) =>
+                                                const Icon(Icons.error),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -499,6 +718,42 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
       ),
     );
   }
+
+  final List<Map<String, String>> projects = const [
+    {
+      "title": "Wheel and Meal",
+      "description":
+          "A multifunctional mobile app enabling users to book bike rides and order groceries or food seamlessly.",
+      "imagePath": "Asset/wm.png",
+      "githubUrl": "https://github.com/Yogesh-Jaisankar/wheel_and_meal",
+      "demoUrl": "https://github.com/Yogesh-Jaisankar/wheel_and_meal",
+    },
+    {
+      "title": "CrediLend",
+      "description":
+          "An app that helps users borrow and lend money easily, with full KYC and credit profiling.",
+      "imagePath": "Asset/cl.png",
+      "githubUrl": "https://github.com/Yogesh-Jaisankar/credilend",
+      "demoUrl": "https://credilend.com",
+    },
+    {
+      "title": "Mystimatch",
+      "description":
+          "MystiMatch is a modern dating app that connects people through smart matching and real-time chemistry.",
+      "imagePath": "Asset/mystimatch.png",
+      "githubUrl": "https://github.com/Yogesh-Jaisankar/credilend",
+      "demoUrl": "https://credilend.com",
+    },
+    {
+      "title": "PixaplusX",
+      "description":
+          "PixaPlusX is a sleek wallpaper app offering high-quality, curated visuals to personalize your device effortlessly.",
+      "imagePath": "Asset/pixaplus.png",
+      "githubUrl": "https://github.com/Yogesh-Jaisankar/credilend",
+      "demoUrl": "https://credilend.com",
+    },
+    // Add more projects as needed
+  ];
 
   void _navigateToPage(int page) {
     _pageController.animateToPage(
@@ -658,4 +913,140 @@ Widget _buildTimelineRow(String year, String description) {
       ),
     ],
   );
+}
+
+class ProjectCard extends StatelessWidget {
+  final String title;
+  final String description;
+  final String imagePath;
+  final String githubUrl;
+  final String demoUrl;
+
+  const ProjectCard({
+    Key? key,
+    required this.title,
+    required this.description,
+    required this.imagePath,
+    required this.githubUrl,
+    required this.demoUrl,
+  }) : super(key: key);
+
+  void _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      debugPrint('Could not launch $url');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      width: 350,
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.white, width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black87.withOpacity(0.4),
+            spreadRadius: 2,
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                imagePath,
+                height: 80,
+                width: 80,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.error, color: Colors.white, size: 80),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.lexendDeca(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    description,
+                    style: GoogleFonts.lexendDeca(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => _launchURL(githubUrl),
+                        child: SvgPicture.asset(
+                          "Asset/github.svg",
+                          height: 50,
+                          width: 50,
+                          color: Colors.white,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => _launchURL(demoUrl),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Container(
+                            height: 40,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.black87,
+                                highlightColor: Colors.grey,
+                                period: const Duration(seconds: 5),
+                                child: Text(
+                                  "Live Demo",
+                                  style: GoogleFonts.lexendDeca(
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
