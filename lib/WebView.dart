@@ -50,6 +50,7 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
     for (var controller in _controllers) {
       controller.dispose();
     }
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -68,279 +69,451 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: PageView(
-        controller: _pageController,
-        scrollDirection: Axis.vertical,
-        children: [
-          // First Section (Your Provided Code)
-          Column(
+      body: Padding(
+        padding: const EdgeInsets.only(right: 2.0),
+        child: RawScrollbar(
+          interactive: true,
+          thumbColor: Colors.black87,
+          thickness: 8.0, // Customize thickness
+          radius: Radius.circular(4), // Rounded edges
+          controller: _pageController,
+          child: PageView(
+            physics: const ClampingScrollPhysics(),
+            controller: _pageController,
+            scrollDirection: Axis.vertical,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.white),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.8),
-                        spreadRadius: 2,
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
+              // First Section (Your Provided Code)
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.white),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.8),
+                            spreadRadius: 2,
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SvgPicture.asset(
-                        "Asset/codebox.svg",
-                        height: 50,
-                        width: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SvgPicture.asset(
+                            "Asset/codebox.svg",
+                            height: 50,
+                            width: 50,
+                          ),
+                          const Spacer(),
+                          NavItem(
+                            text: "Home",
+                            onTap: () => _navigateToPage(0),
+                          ),
+                          NavItem(
+                            text: "About",
+                            onTap: () => _navigateToPage(1),
+                          ),
+                          NavItem(
+                            text: "Projects",
+                            onTap: () => _navigateToPage(2),
+                          ),
+                          NavItem(
+                            text: "Contact",
+                            onTap: () => _navigateToPage(1),
+                          ),
+                          NavItem(
+                            text: "Resume",
+                            onTap: () => _navigateToPage(1),
+                          ),
+                        ],
                       ),
-                      const Spacer(),
-                      const NavItem(text: "Home"),
-                      const NavItem(text: "About"),
-                      const NavItem(text: "Projects"),
-                      const NavItem(text: "Contact"),
-                      const NavItem(text: "Resume"),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    height: 400,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.white),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.8),
-                          spreadRadius: 2,
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
                     ),
-                    child: Row(
-                      children: [
-                        Image.asset("Asset/1.png", fit: BoxFit.fitHeight),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        height: 400,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.white),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.8),
+                              spreadRadius: 2,
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset("Asset/1.png", fit: BoxFit.fitHeight),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Shimmer.fromColors(
+                                        baseColor: Colors.white,
+                                        highlightColor: Colors.grey.shade500,
+                                        period: const Duration(seconds: 5),
+                                        child: Text(
+                                          "Hello! I'm Yogesh Jaisankar",
+                                          style: GoogleFonts.lexendDeca(
+                                            fontSize: 32,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 15),
+                                      Image.asset(
+                                        "Asset/wave.gif",
+                                        height: 50,
+                                        width: 50,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text(
+                                    'I specialize in app development, combining sleek UI/UX design with robust backend architecture to bring powerful ideas to life. From crafting intelligent tools like PixaPlus and Unhike, to shaping social experiences through dating and voice-recording apps, my work reflects a deep focus on user-centric technology and clean design.\n\nBeyond apps, I co-host the podcast Retail Rewired, where we explore the future of omni-channel retail alongside industry thought leaders. I’m currently diving deeper into AI-powered interfaces, Flutter development, and backend systems using Firebase and MongoDB, while actively exploring domains like IoT, NFC tech, and smart city solutions. Whether it’s a product that needs a fresh direction, a platform that needs engineering, or an idea that needs to be heard — I’m always up for a new challenge.',
+                                    textAlign: TextAlign.left,
+                                    softWrap: true,
+                                    style: GoogleFonts.lexendDeca(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: List.generate(_socialItems.length, (
+                                      index,
+                                    ) {
+                                      return MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        onEnter: (_) {
+                                          setState(
+                                            () => _isHovered[index] = true,
+                                          );
+                                          _controllers[index].forward();
+                                        },
+                                        onExit: (_) {
+                                          setState(
+                                            () => _isHovered[index] = false,
+                                          );
+                                          _controllers[index].reverse();
+                                        },
+                                        child: GestureDetector(
+                                          onTap: () => _launchURL(
+                                            _socialItems[index]['url']!,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 15.0,
+                                            ),
+                                            child: AnimatedBuilder(
+                                              animation:
+                                                  _rotationAnimations[index],
+                                              builder: (context, child) {
+                                                return Transform(
+                                                  transform: Matrix4.identity()
+                                                    ..setEntry(3, 2, 0.001)
+                                                    ..rotateY(
+                                                      _rotationAnimations[index]
+                                                          .value,
+                                                    ),
+                                                  alignment: Alignment.center,
+                                                  child: SvgPicture.asset(
+                                                    _socialItems[index]['asset']!,
+                                                    color: Colors.white,
+                                                    height: 50,
+                                                    width: 50,
+                                                    semanticsLabel:
+                                                        'Social Icon ${index + 1}',
+                                                    placeholderBuilder:
+                                                        (context) => const Icon(
+                                                          Icons.error,
+                                                        ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: GestureDetector(
+                                      onTap: () => _launchURL(
+                                        'https://your-resume-link',
+                                      ),
+                                      child: Semantics(
+                                        button: true,
+                                        label: 'Download CV',
+                                        child: Container(
+                                          height: 50,
+                                          width: 180,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.expand_circle_down,
+                                                  color: Colors.black87
+                                                      .withOpacity(0.8),
+                                                ),
+                                                const SizedBox(width: 15),
+                                                Text(
+                                                  "Download CV",
+                                                  style: GoogleFonts.lexendDeca(
+                                                    color: Colors.black87,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // Second Section (Example Content)
+              Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.white),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.8),
+                              spreadRadius: 2,
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Left Column
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Shimmer.fromColors(
                                     baseColor: Colors.white,
-                                    highlightColor: Colors.blueAccent,
+                                    highlightColor: Colors.grey.shade500,
                                     period: const Duration(seconds: 5),
                                     child: Text(
-                                      "Hello! I'm Yogesh Jaisankar",
+                                      "Education And Extracurricular",
                                       style: GoogleFonts.lexendDeca(
                                         fontSize: 32,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 15),
-                                  Image.asset(
-                                    "Asset/wave.gif",
-                                    height: 50,
-                                    width: 50,
+                                  const SizedBox(height: 50),
+                                  _buildTimelineContainer(),
+                                  const SizedBox(height: 50),
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: Colors.white),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black87.withOpacity(
+                                              0.4,
+                                            ),
+                                            spreadRadius: 2,
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 4),
+                                          ),
+                                        ],
+                                      ),
+                                      padding: const EdgeInsets.all(
+                                        8.0,
+                                      ), // Add padding for better spacing
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Expanded(
+                                            child: SvgPicture.asset(
+                                              "Asset/kata.svg",
+                                              fit: BoxFit
+                                                  .contain, // Ensure proper scaling
+                                              height:
+                                                  150, // Relative size (adjust as needed)
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: SvgPicture.asset(
+                                              "Asset/sakte.svg",
+                                              fit: BoxFit.contain,
+                                              height: 100,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: SvgPicture.asset(
+                                              "Asset/tennis.svg",
+                                              fit: BoxFit.contain,
+                                              height: 100,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: SvgPicture.asset(
+                                              "Asset/vol.svg",
+                                              fit: BoxFit.contain,
+                                              height: 100,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 20),
-                              Text(
-                                'I specialize in app development, combining sleek UI/UX design with robust backend architecture to bring powerful ideas to life. From crafting intelligent tools like PixaPlus and Unhike, to shaping social experiences through dating and voice-recording apps, my work reflects a deep focus on user-centric technology and clean design.\n\nBeyond apps, I co-host the podcast Retail Rewired, where we explore the future of omni-channel retail alongside industry thought leaders. I’m currently diving deeper into AI-powered interfaces, Flutter development, and backend systems using Firebase and MongoDB, while actively exploring domains like IoT, NFC tech, and smart city solutions. Whether it’s a product that needs a fresh direction, a platform that needs engineering, or an idea that needs to be heard — I’m always up for a new challenge.',
-                                textAlign: TextAlign.left,
-                                softWrap: true,
-                                style: GoogleFonts.lexendDeca(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                ),
+                            ),
+                            // Right Image
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Image.asset(
+                                "Asset/edu.png",
+                                fit: BoxFit.fitHeight,
                               ),
-                              const SizedBox(height: 20),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: List.generate(_socialItems.length, (
-                                  index,
-                                ) {
-                                  return MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    onEnter: (_) {
-                                      setState(() => _isHovered[index] = true);
-                                      _controllers[index].forward();
-                                    },
-                                    onExit: (_) {
-                                      setState(() => _isHovered[index] = false);
-                                      _controllers[index].reverse();
-                                    },
-                                    child: GestureDetector(
-                                      onTap: () => _launchURL(
-                                        _socialItems[index]['url']!,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          right: 15.0,
-                                        ),
-                                        child: AnimatedBuilder(
-                                          animation: _rotationAnimations[index],
-                                          builder: (context, child) {
-                                            return Transform(
-                                              transform: Matrix4.identity()
-                                                ..setEntry(3, 2, 0.001)
-                                                ..rotateY(
-                                                  _rotationAnimations[index]
-                                                      .value,
-                                                ),
-                                              alignment: Alignment.center,
-                                              child: SvgPicture.asset(
-                                                _socialItems[index]['asset']!,
-                                                color: Colors.white,
-                                                height: 50,
-                                                width: 50,
-                                                semanticsLabel:
-                                                    'Social Icon ${index + 1}',
-                                                placeholderBuilder: (context) =>
-                                                    const Icon(Icons.error),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }),
-                              ),
-                              const SizedBox(height: 20),
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Container(
-                                  height: 50,
-                                  width: 180,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.expand_circle_down,
-                                          color: Colors.black87.withOpacity(
-                                            0.8,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 15),
-                                        Text(
-                                          "Download CV",
-                                          style: GoogleFonts.lexendDeca(
-                                            color: Colors.black87,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
+              ),
+              // Third Section (Example Content)
+              Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.white),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.8),
+                              spreadRadius: 2,
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            // Left SVG Image
+                            Image.asset(
+                              "Asset/pro.png", // Replace with your SVG asset path
+                              height: 600,
+                              width: 600,
+                              alignment: Alignment
+                                  .centerLeft, // Ensure alignment to the left
+                            ),
+                            // Right Column
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Shimmer.fromColors(
+                                    baseColor: Colors.white,
+                                    highlightColor: Colors.grey.shade500,
+                                    period: const Duration(seconds: 5),
+                                    child: Text(
+                                      "Projects",
+                                      style: GoogleFonts.lexendDeca(
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 50),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          // Second Section (Example Content)
-          Column(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 15,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.white),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.8),
-                          spreadRadius: 2,
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Left Column
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Shimmer.fromColors(
-                                baseColor: Colors.white,
-                                highlightColor: Colors.blueAccent,
-                                period: const Duration(seconds: 5),
-                                child: Text(
-                                  "Education Details",
-                                  style: GoogleFonts.lexendDeca(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 50),
-                              _buildTimelineContainer(),
-                            ],
-                          ),
-                        ),
-                        // Right Image
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Image.asset(
-                            "Asset/edu.png",
-                            fit: BoxFit.fitHeight,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
+    );
+  }
+
+  void _navigateToPage(int page) {
+    _pageController.animateToPage(
+      page,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
     );
   }
 }
 
 class NavItem extends StatefulWidget {
   final String text;
+  final VoidCallback onTap;
 
-  const NavItem({super.key, required this.text});
+  const NavItem({super.key, required this.text, required this.onTap});
 
   @override
   State<NavItem> createState() => _NavItemState();
@@ -356,10 +529,7 @@ class _NavItemState extends State<NavItem> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
-        onTap: () {
-          // Add navigation logic here if needed
-          print('${widget.text} clicked');
-        },
+        onTap: widget.onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
