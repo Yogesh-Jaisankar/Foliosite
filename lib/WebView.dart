@@ -539,88 +539,109 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 10,
+                      ),
                       child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.white),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.8),
+                              spreadRadius: 2,
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
                         child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Image.asset("Asset/bye.png", height: 300),
-                              const SizedBox(height: 40),
-                              Text(
-                                "Get in Touch",
-                                style: GoogleFonts.lexendDeca(
-                                  color: Colors.black87,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                "Contact Me",
-                                style: GoogleFonts.lexendDeca(
-                                  color: Colors.black87,
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 32),
-                              Container(
-                                constraints: const BoxConstraints(
-                                  maxWidth: 600,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: Colors.black87,
-                                    width: 1,
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Get in Touch",
+                                    style: GoogleFonts.lexendDeca(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.mail,
-                                      color: Colors.black,
-                                      size: 30,
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    "Contact Me",
+                                    style: GoogleFonts.lexendDeca(
+                                      color: Colors.white,
+                                      fontSize: 36,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    const SizedBox(width: 12),
-                                    Flexible(
-                                      child: Text(
-                                        "Yogeshjaisnkar@gmail.com",
-                                        style: GoogleFonts.lexendDeca(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                  ),
+                                  const SizedBox(height: 32),
+                                  Container(
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 600,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 12,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 1,
                                       ),
                                     ),
-                                    const SizedBox(width: 15),
-                                    SvgPicture.asset(
-                                      "Asset/linkdin.svg",
-                                      height: 30,
-                                      color: Colors.black, // Match theme
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Flexible(
-                                      child: Text(
-                                        "Yogesh Jaisankar",
-                                        style: GoogleFonts.lexendDeca(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        const Icon(
+                                          Icons.mail,
+                                          color: Colors.white,
+                                          size: 30,
                                         ),
-                                      ),
+                                        const SizedBox(width: 12),
+                                        Flexible(
+                                          child: Text(
+                                            "Yogeshjaisnkar@gmail.com",
+                                            style: GoogleFonts.lexendDeca(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 15),
+                                        SvgPicture.asset(
+                                          "Asset/linkdin.svg",
+                                          height: 30,
+                                          color: Colors.white, // Match theme
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Flexible(
+                                          child: Text(
+                                            "Yogesh Jaisankar",
+                                            style: GoogleFonts.lexendDeca(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                ],
                               ),
-                              const SizedBox(height: 16),
+                              Image.asset("Asset/bye.png", height: 500),
                             ],
                           ),
                         ),
@@ -628,12 +649,15 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Container(
                       height: 100,
                       padding: const EdgeInsets.all(15.0),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                        ),
                         border: Border.all(color: Colors.white),
                         boxShadow: [
                           BoxShadow(
@@ -659,52 +683,6 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
                                 color: Colors.white,
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 20),
-                          Row(
-                            children: List.generate(_socialItems.length, (
-                              index,
-                            ) {
-                              return MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                onEnter: (_) {
-                                  setState(() => _isHovered[index] = true);
-                                  _controllers[index].forward();
-                                },
-                                onExit: (_) {
-                                  setState(() => _isHovered[index] = false);
-                                  _controllers[index].reverse();
-                                },
-                                child: GestureDetector(
-                                  onTap: () =>
-                                      _launchURL(_socialItems[index]['url']!),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 15.0),
-                                    child: AnimatedBuilder(
-                                      animation: _rotationAnimations[index],
-                                      builder: (context, child) {
-                                        return Transform(
-                                          transform: Matrix4.identity()
-                                            ..setEntry(3, 2, 0.001)
-                                            ..rotateY(
-                                              _rotationAnimations[index].value,
-                                            ),
-                                          alignment: Alignment.center,
-                                          child: SvgPicture.asset(
-                                            _socialItems[index]['asset']!,
-                                            color: Colors.white,
-                                            height: 40,
-                                            width: 40,
-                                            placeholderBuilder: (context) =>
-                                                const Icon(Icons.error),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
                           ),
                         ],
                       ),
