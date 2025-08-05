@@ -17,15 +17,12 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          // Select view based on screen width
+          print('Screen width: ${constraints.maxWidth}');
           if (constraints.maxWidth < 600) {
-            // Mobile layout
             return const Mobileview();
           } else if (constraints.maxWidth < 1200) {
-            // Tablet layout
             return const Tabletview();
           } else {
-            // Web/Desktop layout
             return const WebView();
           }
         },

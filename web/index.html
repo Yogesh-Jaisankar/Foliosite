@@ -1,24 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="Test">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -26,13 +14,87 @@
   <meta name="apple-mobile-web-app-title" content="foliosite">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
+  <!-- Preload the loading image to prioritize its loading -->
+  <link rel="preload" href="icons/face.png" as="image">
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
   <title>foliosite</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    /* Reset default margins and padding */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    /* Center the loading indicator */
+    .loading-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(25, 25, 25); /* Matches Colors.black87 with 0.9 opacity */
+      color: #ffffff; /* White text to match app theme */
+      font-family: 'Lexend Deca', sans-serif; /* Matches GoogleFonts.lexendDeca */
+      z-index: 9999; /* Ensure it covers everything */
+    }
+    .loading-container p {
+      font-weight: bold; /* Set Lexend Deca to bold for the p element */
+      font-size: 16px;
+    }
+    .loader {
+      border: 8px solid #f3f3f3; /* Light gray */
+      border-top: 8px solid rgba(25, 25, 25, 0.9); /* Matches background */
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    /* Hide Flutter's default canvas until loaded with high specificity */
+    #flutter_loading, canvas#flutter_loading {
+      display: none !important;
+    }
+    /* Ensure image loads smoothly and doesn’t cause layout shifts */
+    .loading-container img {
+      height: 250px;
+      margin-bottom: 10px;
+      object-fit: contain; /* Prevent distortion */
+      max-width: 100%; /* Ensure responsiveness */
+    }
+  </style>
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+<!-- Custom loading indicator -->
+<div class="loading-container" id="loading">
+  <img src="icons/face.png" alt="Loading" />
+  <div class="loader"></div>
+  <p>Connecting to server...</p>
+</div>
+
+<script>
+  // Remove the loading indicator once Flutter is ready
+  window.addEventListener('flutter-first-frame', () => {
+    const loading = document.getElementById('loading');
+    if (loading) {
+      loading.remove();
+    }
+  });
+</script>
+
+<script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

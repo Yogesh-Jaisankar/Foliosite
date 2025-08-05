@@ -324,129 +324,46 @@ class _WebViewState extends State<WebView> with TickerProviderStateMixin {
                 ],
               ),
               // Second Section (Example Content)
-              Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 15,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.white),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.8),
-                              spreadRadius: 2,
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Left Column
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Shimmer.fromColors(
-                                    baseColor: Colors.white,
-                                    highlightColor: Colors.grey.shade500,
-                                    period: const Duration(seconds: 5),
-                                    child: Text(
-                                      "About Me",
-                                      style: GoogleFonts.lexendDeca(
-                                        fontSize: 32,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 50),
-                                  _buildTimelineContainer(),
-                                  const SizedBox(height: 50),
-                                  Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(color: Colors.white),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black87.withOpacity(
-                                              0.4,
-                                            ),
-                                            spreadRadius: 2,
-                                            blurRadius: 8,
-                                            offset: const Offset(0, 4),
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(
-                                        8.0,
-                                      ), // Add padding for better spacing
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Expanded(
-                                            child: SvgPicture.asset(
-                                              "Asset/kata.svg",
-                                              fit: BoxFit
-                                                  .contain, // Ensure proper scaling
-                                              height:
-                                                  150, // Relative size (adjust as needed)
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: SvgPicture.asset(
-                                              "Asset/sakte.svg",
-                                              fit: BoxFit.contain,
-                                              height: 100,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: SvgPicture.asset(
-                                              "Asset/tennis.svg",
-                                              fit: BoxFit.contain,
-                                              height: 100,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: SvgPicture.asset(
-                                              "Asset/vol.svg",
-                                              fit: BoxFit.contain,
-                                              height: 100,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            // Right Image
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Image.asset(
-                                "Asset/about.png",
-                                height: 600,
-                                width: 600,
-                                alignment: Alignment.centerRight,
-                              ),
-                            ),
-                          ],
+              Container(
+                padding: const EdgeInsets.all(15.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.white),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.8),
+                      spreadRadius: 2,
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Shimmer.fromColors(
+                      baseColor: Colors.white,
+                      highlightColor: Colors.grey.shade500,
+                      period: const Duration(seconds: 5),
+                      child: Text(
+                        "Education and Skills",
+                        style: GoogleFonts.lexendDeca(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    Image.asset(
+                      "Asset/about.png",
+                      height: 500, // You can adjust this
+                      width: double.infinity,
+                      fit: BoxFit.contain,
+                    ),
+                  ],
+                ),
               ),
+
               // Third Section (Example Content)
               Column(
                 children: [
